@@ -1,0 +1,1731 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>🚀 MPI IPAS — Misi Siklus Air dan Ekosistem (Fase C)</title>
+<style>
+:root{
+  --bg:#eef2ff;
+  --bg2:#ffffff;
+  --ink:#101a35;
+  --muted:#5c6b8f;
+  --primary:#4f46e5;
+  --primary2:#7c3aed;
+  --cyan:#06b6d4;
+  --accent:#f59e0b;
+  --green:#10b981;
+  --red:#ef4444;
+  --pink:#ec4899;
+  --border:#e0e7ff;
+  --shadow:0 10px 30px rgba(79,70,229,.12);
+  --shadow-lg:0 20px 50px rgba(79,70,229,.20);
+  --radius:20px;
+}
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+html{scroll-behavior:smooth}
+body{
+  font-family:'Segoe UI',system-ui,-apple-system,'Helvetica Neue',sans-serif;
+  background:
+    radial-gradient(circle at 12% 8%, #ddd6fe 0%, transparent 42%),
+    radial-gradient(circle at 88% 12%, #cffafe 0%, transparent 40%),
+    radial-gradient(circle at 50% 100%, #fce7f3 0%, transparent 45%),
+    var(--bg);
+  color:var(--ink);
+  min-height:100vh;
+  overflow-x:hidden;
+  line-height:1.65;
+}
+
+/* ================= TOPBAR ================= */
+.topbar{
+  position:sticky;top:0;z-index:200;
+  display:flex;align-items:center;gap:12px;flex-wrap:wrap;
+  padding:10px 16px;
+  background:rgba(255,255,255,.88);
+  backdrop-filter:blur(14px);
+  border-bottom:2px solid var(--border);
+  box-shadow:0 4px 20px rgba(79,70,229,.07);
+}
+.brand{
+  display:flex;align-items:center;gap:9px;
+  font-weight:900;font-size:1.02rem;letter-spacing:.2px;
+  color:var(--primary);
+  white-space:nowrap;
+}
+.brand .rocket{font-size:1.4rem;animation:float 3s ease-in-out infinite}
+@keyframes float{0%,100%{transform:translateY(0) rotate(-6deg)}50%{transform:translateY(-6px) rotate(6deg)}}
+.tabs{display:flex;gap:6px;flex-wrap:wrap;flex:1;justify-content:center}
+.tabs button{
+  border:2px solid transparent;background:#f5f7ff;color:var(--muted);
+  padding:7px 13px;border-radius:999px;font-size:.83rem;font-weight:700;
+  cursor:pointer;transition:.18s;font-family:inherit;white-space:nowrap;
+}
+.tabs button:hover{background:#e6ebff;color:var(--primary);transform:translateY(-2px)}
+.tabs button.active{
+  background:linear-gradient(135deg,var(--primary),var(--primary2));
+  color:#fff;box-shadow:0 6px 16px rgba(79,70,229,.35);border-color:#fff;
+}
+.sound-btn{
+  border:2px solid var(--border);background:#fff;border-radius:12px;
+  width:42px;height:42px;font-size:1.15rem;cursor:pointer;transition:.2s;
+  display:grid;place-items:center;
+}
+.sound-btn:hover{background:#eef2ff;transform:scale(1.06)}
+.sound-btn.off{opacity:.45}
+
+/* ================= LAYOUT ================= */
+main{max-width:1180px;margin:0 auto;padding:22px 16px 60px}
+.view{display:none;animation:fadeUp .45s ease}
+.view.active{display:block}
+@keyframes fadeUp{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:translateY(0)}}
+
+.card{
+  background:var(--bg2);border:2px solid var(--border);border-radius:var(--radius);
+  padding:22px;box-shadow:var(--shadow);margin-bottom:20px;
+}
+.card.soft{background:linear-gradient(160deg,#ffffff,#f8faff)}
+
+h1{font-size:clamp(1.7rem,4.6vw,2.7rem);line-height:1.2;font-weight:900;letter-spacing:-.5px}
+h2{font-size:clamp(1.25rem,3vw,1.7rem);font-weight:900;margin-bottom:6px}
+h3{font-size:1.08rem;font-weight:800;margin:18px 0 8px;color:var(--primary)}
+h4{font-size:.98rem;font-weight:800;margin:12px 0 6px;color:var(--primary2)}
+p{margin-bottom:11px;color:#26324f}
+.section-head{display:flex;align-items:center;gap:12px;margin-bottom:14px;flex-wrap:wrap}
+.section-head .ico{
+  width:52px;height:52px;border-radius:16px;display:grid;place-items:center;
+  font-size:1.6rem;background:linear-gradient(135deg,#eef2ff,#e0e7ff);
+  border:2px solid var(--border);flex-shrink:0;
+}
+.pill{
+  display:inline-flex;align-items:center;gap:6px;
+  background:#eef2ff;color:var(--primary);border:2px solid var(--border);
+  padding:4px 12px;border-radius:999px;font-size:.75rem;font-weight:800;
+}
+.pill.green{background:#ecfdf5;color:#047857;border-color:#a7f3d0}
+.pill.amber{background:#fffbeb;color:#b45309;border-color:#fde68a}
+.pill.pink{background:#fdf2f8;color:#be185d;border-color:#fbcfe8}
+.pill.cyan{background:#ecfeff;color:#0e7490;border-color:#a5f3fc}
+
+/* ================= HERO ================= */
+.hero{
+  position:relative;overflow:hidden;border-radius:26px;
+  background:linear-gradient(135deg,#4f46e5 0%,#7c3aed 45%,#0891b2 100%);
+  color:#fff;padding:38px 26px;margin-bottom:22px;
+  box-shadow:var(--shadow-lg);
+}
+.hero::before{
+  content:"";position:absolute;inset:0;
+  background-image:
+    radial-gradient(2px 2px at 12% 22%,#fff,transparent),
+    radial-gradient(2px 2px at 32% 68%,#fff,transparent),
+    radial-gradient(1.5px 1.5px at 55% 18%,#fff,transparent),
+    radial-gradient(2px 2px at 74% 58%,#fff,transparent),
+    radial-gradient(1.5px 1.5px at 88% 28%,#fff,transparent),
+    radial-gradient(1.5px 1.5px at 45% 88%,#fff,transparent),
+    radial-gradient(2px 2px at 92% 82%,#fff,transparent);
+  opacity:.55;animation:twinkle 4s ease-in-out infinite;
+}
+@keyframes twinkle{0%,100%{opacity:.35}50%{opacity:.8}}
+.hero > *{position:relative;z-index:2}
+.hero h1{text-shadow:0 4px 20px rgba(0,0,0,.25);margin-bottom:10px}
+.hero p{color:#e9e6ff;max-width:720px;font-size:1.02rem}
+.hero-badges{display:flex;gap:8px;flex-wrap:wrap;margin-top:16px}
+.hero-badges span{
+  background:rgba(255,255,255,.18);border:1.5px solid rgba(255,255,255,.35);
+  padding:6px 14px;border-radius:999px;font-size:.78rem;font-weight:800;backdrop-filter:blur(6px);
+}
+.hero-cta{display:flex;gap:10px;flex-wrap:wrap;margin-top:20px}
+
+.btn{
+  border:none;border-radius:14px;padding:12px 22px;font-size:.92rem;font-weight:800;
+  cursor:pointer;transition:.2s;font-family:inherit;display:inline-flex;align-items:center;gap:8px;
+  box-shadow:0 6px 18px rgba(79,70,229,.22);
+}
+.btn:hover{transform:translateY(-3px);box-shadow:0 12px 26px rgba(79,70,229,.3)}
+.btn:active{transform:translateY(0) scale(.98)}
+.btn-primary{background:linear-gradient(135deg,var(--primary),var(--primary2));color:#fff}
+.btn-light{background:#fff;color:var(--primary);border:2px solid var(--border)}
+.btn-green{background:linear-gradient(135deg,#10b981,#059669);color:#fff}
+.btn-amber{background:linear-gradient(135deg,#f59e0b,#d97706);color:#fff}
+.btn-red{background:linear-gradient(135deg,#ef4444,#dc2626);color:#fff}
+.btn-cyan{background:linear-gradient(135deg,#06b6d4,#0891b2);color:#fff}
+.btn-sm{padding:8px 14px;font-size:.8rem;border-radius:11px}
+.btn:disabled{opacity:.5;cursor:not-allowed;transform:none!important}
+
+/* ================= MISSION MAP ================= */
+.map-grid{
+  display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px;margin-top:16px;
+}
+.map-node{
+  background:#fff;border:2px dashed var(--border);border-radius:16px;padding:15px 12px;
+  text-align:center;cursor:pointer;transition:.22s;position:relative;
+}
+.map-node:hover{border-color:var(--primary);transform:translateY(-4px);box-shadow:var(--shadow)}
+.map-node.done{border-style:solid;border-color:var(--green);background:#f0fdf9}
+.map-node .mn-ico{font-size:1.9rem;display:block;margin-bottom:5px}
+.map-node .mn-title{font-weight:800;font-size:.86rem}
+.map-node .mn-sub{font-size:.72rem;color:var(--muted);margin-top:2px}
+.map-node .check{
+  position:absolute;top:-8px;right:-8px;background:var(--green);color:#fff;
+  width:24px;height:24px;border-radius:50%;display:none;place-items:center;font-size:.75rem;
+  border:2px solid #fff;
+}
+.map-node.done .check{display:grid}
+
+/* ================= MATERI ================= */
+.materi-body{max-height:none}
+.materi-body h3{
+  border-left:6px solid var(--primary);padding-left:12px;
+  background:linear-gradient(90deg,#eef2ff,transparent);padding-top:5px;padding-bottom:5px;
+  border-radius:0 10px 10px 0;
+}
+.materi-body p{text-align:justify;font-size:.95rem}
+.materi-body ul,.materi-body ol{margin:8px 0 14px 22px}
+.materi-body li{margin-bottom:7px;font-size:.93rem}
+.highlight{
+  background:linear-gradient(135deg,#fffbeb,#fef3c7);border:2px solid #fde68a;
+  border-radius:14px;padding:14px 16px;margin:14px 0;
+}
+.highlight strong{color:#b45309}
+.info-box{
+  background:linear-gradient(135deg,#ecfeff,#cffafe);border:2px solid #a5f3fc;
+  border-radius:14px;padding:14px 16px;margin:14px 0;
+}
+.info-box strong{color:#0e7490}
+.summary-cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:12px;margin-top:14px}
+.summary-card{
+  background:linear-gradient(160deg,#fff,#f5f7ff);border:2px solid var(--border);
+  border-radius:16px;padding:14px;transition:.2s;
+}
+.summary-card:hover{transform:translateY(-4px);box-shadow:var(--shadow);border-color:var(--primary)}
+.summary-card .sc-ico{font-size:1.6rem}
+.summary-card .sc-t{font-weight:800;font-size:.9rem;margin:6px 0 4px;color:var(--primary)}
+.summary-card .sc-d{font-size:.8rem;color:var(--muted);line-height:1.5}
+
+/* ================= LAB ================= */
+.lab-wrap{display:grid;grid-template-columns:1.35fr 1fr;gap:16px}
+@media(max-width:900px){.lab-wrap{grid-template-columns:1fr}}
+.canvas-box{
+  background:#0b1224;border-radius:18px;overflow:hidden;border:3px solid #1e293b;
+  box-shadow:var(--shadow);position:relative;
+}
+#labCanvas{display:block;width:100%;height:360px;background:#0b1224}
+.canvas-badge{
+  position:absolute;top:10px;left:12px;background:rgba(255,255,255,.14);
+  border:1.5px solid rgba(255,255,255,.28);color:#fff;padding:4px 12px;
+  border-radius:999px;font-size:.72rem;font-weight:800;backdrop-filter:blur(6px);
+}
+.ctrl-group{margin-bottom:16px}
+.ctrl-group label{
+  display:flex;justify-content:space-between;font-size:.83rem;font-weight:800;
+  color:#26324f;margin-bottom:6px;gap:8px;
+}
+.ctrl-group label span.val{
+  background:var(--primary);color:#fff;padding:1px 10px;border-radius:999px;
+  font-size:.74rem;min-width:64px;text-align:center;
+}
+input[type=range]{
+  -webkit-appearance:none;width:100%;height:9px;border-radius:999px;
+  background:linear-gradient(90deg,var(--primary),var(--cyan));outline:none;cursor:pointer;
+}
+input[type=range]::-webkit-slider-thumb{
+  -webkit-appearance:none;width:24px;height:24px;border-radius:50%;
+  background:#fff;border:4px solid var(--primary);cursor:pointer;
+  box-shadow:0 3px 10px rgba(79,70,229,.4);transition:.15s;
+}
+input[type=range]::-webkit-slider-thumb:hover{transform:scale(1.15)}
+input[type=range]::-moz-range-thumb{
+  width:22px;height:22px;border-radius:50%;background:#fff;border:4px solid var(--primary);cursor:pointer;
+}
+.gauge-list{display:flex;flex-direction:column;gap:9px;margin-top:10px}
+.gauge{font-size:.79rem;font-weight:700}
+.gauge .g-top{display:flex;justify-content:space-between;margin-bottom:3px;color:#334155}
+.gauge .g-bar{height:12px;border-radius:999px;background:#e8edf9;overflow:hidden}
+.gauge .g-fill{height:100%;border-radius:999px;transition:width .35s ease;width:0%}
+.readout{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:10px;margin-top:12px}
+.readout .ro{
+  background:#f7f9ff;border:2px solid var(--border);border-radius:14px;padding:10px;text-align:center;
+}
+.readout .ro .ro-v{font-size:1.3rem;font-weight:900;color:var(--primary)}
+.readout .ro .ro-l{font-size:.7rem;color:var(--muted);font-weight:700;text-transform:uppercase;letter-spacing:.4px}
+
+/* ================= PUZZLE ================= */
+.puzzle-area{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+@media(max-width:780px){.puzzle-area{grid-template-columns:1fr}}
+.pool{
+  display:flex;flex-direction:column;gap:10px;min-height:90px;
+  padding:12px;background:#f7f9ff;border:2px dashed var(--border);border-radius:16px;
+}
+.piece{
+  background:linear-gradient(135deg,#fff,#eef2ff);border:2px solid var(--primary);
+  border-radius:14px;padding:12px 14px;font-weight:800;font-size:.85rem;cursor:grab;
+  transition:.18s;user-select:none;display:flex;align-items:center;gap:9px;
+  box-shadow:0 4px 12px rgba(79,70,229,.12);
+}
+.piece:hover{transform:translateY(-3px) scale(1.015);box-shadow:0 8px 20px rgba(79,70,229,.22)}
+.piece:active{cursor:grabbing}
+.piece.selected{border-color:var(--accent);background:linear-gradient(135deg,#fffbeb,#fef3c7);box-shadow:0 0 0 4px rgba(245,158,11,.25)}
+.piece.placed{opacity:.95;cursor:default;pointer-events:none}
+.piece.dragging{opacity:.4}
+.slots{display:flex;flex-direction:column;gap:10px}
+.slot{
+  border:3px dashed #cbd5e1;border-radius:16px;min-height:58px;
+  display:flex;align-items:center;gap:10px;padding:8px 12px;transition:.2s;
+  background:#fbfcff;position:relative;
+}
+.slot .slot-num{
+  width:30px;height:30px;border-radius:50%;background:#e0e7ff;color:var(--primary);
+  display:grid;place-items:center;font-weight:900;font-size:.85rem;flex-shrink:0;
+}
+.slot.over{border-color:var(--primary);background:#eef2ff;transform:scale(1.02)}
+.slot.correct{border-style:solid;border-color:var(--green);background:#f0fdf9}
+.slot.wrong{animation:shake .4s;border-color:var(--red);background:#fef2f2}
+@keyframes shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-9px)}75%{transform:translateX(9px)}}
+.slot .slot-hint{font-size:.72rem;color:var(--muted);font-style:italic}
+
+/* ================= EVALUASI ================= */
+.modal{
+  position:fixed;inset:0;background:rgba(15,23,42,.6);backdrop-filter:blur(6px);
+  display:none;place-items:center;z-index:900;padding:16px;
+}
+.modal.show{display:grid;animation:fadeUp .3s}
+.modal-box{
+  background:#fff;border-radius:22px;padding:26px;max-width:460px;width:100%;
+  box-shadow:var(--shadow-lg);max-height:92vh;overflow-y:auto;
+}
+.modal-box h3{margin-top:0}
+.field{margin-bottom:14px}
+.field label{display:block;font-size:.82rem;font-weight:800;margin-bottom:5px;color:#334155}
+.field input,.field select{
+  width:100%;padding:12px 14px;border:2px solid var(--border);border-radius:13px;
+  font-family:inherit;font-size:.92rem;outline:none;transition:.18s;background:#fbfcff;
+}
+.field input:focus,.field select:focus{border-color:var(--primary);background:#fff;box-shadow:0 0 0 4px rgba(79,70,229,.12)}
+
+.quiz-head{
+  display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;
+  background:linear-gradient(135deg,#4f46e5,#7c3aed);color:#fff;
+  padding:14px 18px;border-radius:18px 18px 0 0;
+}
+.quiz-head .qh-item{display:flex;align-items:center;gap:6px;font-weight:800;font-size:.85rem}
+.quiz-body{padding:20px;border:2px solid var(--border);border-top:none;border-radius:0 0 18px 18px;background:#fff}
+.timer-bar{height:10px;background:#e8edf9;border-radius:999px;overflow:hidden;margin-bottom:16px}
+.timer-fill{height:100%;background:linear-gradient(90deg,var(--green),var(--cyan));width:100%;transition:width 1s linear}
+.timer-fill.warn{background:linear-gradient(90deg,#f59e0b,#ef4444)}
+.q-text{font-size:1.02rem;font-weight:700;margin-bottom:16px;line-height:1.6}
+.q-img{max-width:100%;border-radius:14px;margin-bottom:14px;border:2px solid var(--border)}
+.options{display:flex;flex-direction:column;gap:10px}
+.opt{
+  display:flex;align-items:center;gap:12px;padding:13px 16px;border:2px solid var(--border);
+  border-radius:14px;cursor:pointer;transition:.18s;background:#fbfcff;font-size:.92rem;font-weight:600;
+}
+.opt:hover{border-color:var(--primary);background:#eef2ff;transform:translateX(5px)}
+.opt .key{
+  width:32px;height:32px;border-radius:10px;background:#e0e7ff;color:var(--primary);
+  display:grid;place-items:center;font-weight:900;flex-shrink:0;
+}
+.opt.correct{border-color:var(--green);background:#f0fdf9;pointer-events:none}
+.opt.correct .key{background:var(--green);color:#fff}
+.opt.wrong{border-color:var(--red);background:#fef2f2;pointer-events:none}
+.opt.wrong .key{background:var(--red);color:#fff}
+.opt.locked{pointer-events:none}
+.feedback{
+  margin-top:14px;padding:13px 16px;border-radius:14px;font-size:.88rem;font-weight:700;display:none;
+}
+.feedback.show{display:block;animation:fadeUp .3s}
+.feedback.ok{background:#f0fdf9;border:2px solid #a7f3d0;color:#047857}
+.feedback.no{background:#fef2f2;border:2px solid #fecaca;color:#b91c1c}
+
+.result-hero{text-align:center;padding:26px 16px}
+.result-hero .big{font-size:3.6rem;line-height:1}
+.result-hero .score-big{font-size:3rem;font-weight:900;color:var(--primary)}
+.badge-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(110px,1fr));gap:12px;margin-top:18px}
+.badge-card{
+  background:linear-gradient(160deg,#fff,#f5f7ff);border:2px solid var(--border);
+  border-radius:16px;padding:14px;text-align:center;
+}
+.badge-card .b-ico{font-size:2rem}
+.badge-card .b-t{font-size:.74rem;font-weight:800;color:var(--muted);margin-top:5px}
+
+/* ================= GURU ================= */
+.table-wrap{overflow-x:auto;border-radius:14px;border:2px solid var(--border)}
+table{width:100%;border-collapse:collapse;font-size:.82rem;background:#fff;min-width:520px}
+th{background:linear-gradient(135deg,#4f46e5,#7c3aed);color:#fff;padding:11px;text-align:left;font-weight:800;font-size:.78rem}
+td{padding:10px 11px;border-bottom:1px solid var(--border);vertical-align:top}
+tr:nth-child(even) td{background:#fafbff}
+tr:hover td{background:#eef2ff}
+.empty-state{text-align:center;padding:26px;color:var(--muted);font-size:.86rem}
+
+/* ================= FOOTER ================= */
+footer{
+  text-align:center;padding:26px 16px;color:var(--muted);font-size:.82rem;
+  border-top:2px solid var(--border);background:rgba(255,255,255,.7);margin-top:20px;
+}
+footer strong{color:var(--primary)}
+
+/* ================= TOAST ================= */
+#toast{
+  position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(120px);
+  background:#101a35;color:#fff;padding:13px 24px;border-radius:999px;font-weight:800;
+  font-size:.86rem;z-index:1000;transition:.35s cubic-bezier(.2,.9,.3,1.4);
+  box-shadow:0 14px 34px rgba(0,0,0,.3);max-width:92vw;text-align:center;
+}
+#toast.show{transform:translateX(-50%) translateY(0)}
+
+@media(max-width:640px){
+  .card{padding:16px}
+  .hero{padding:26px 18px}
+  .tabs button{padding:6px 10px;font-size:.76rem}
+  .brand span{font-size:.88rem}
+  #labCanvas{height:270px}
+}
+</style>
+</head>
+<body>
+
+<!-- ================= TOPBAR ================= -->
+<header class="topbar">
+  <div class="brand"><span class="rocket">🚀</span><span>Misi Siklus Air &amp; Ekosistem</span></div>
+  <nav class="tabs" id="tabs">
+    <button data-view="home" class="active">🏠 Beranda</button>
+    <button data-view="tujuan">🎯 Tujuan</button>
+    <button data-view="materi">📚 Materi</button>
+    <button data-view="lab">🧪 Lab Maya</button>
+    <button data-view="puzzle">🧩 Puzzle</button>
+    <button data-view="evaluasi">📝 Evaluasi</button>
+    <button data-view="guru">🔐 Guru</button>
+  </nav>
+  <button class="sound-btn" id="soundToggle" title="Hidup/Matikan Suara">🔊</button>
+</header>
+
+<main>
+
+  <!-- ============================================================
+       VIEW: BERANDA / LANDING PAGE
+  ============================================================= -->
+  <section id="view-home" class="view active">
+
+    <div class="hero">
+      <span class="pill" style="background:rgba(255,255,255,.2);color:#fff;border-color:rgba(255,255,255,.4)">🌌 FASE C — KELAS 5 SD</span>
+      <h1>🚀 Misi Siklus Air &amp; Ekosistem</h1>
+      <p>
+        Selamat datang, Penjelajah Sains! Planet Bumi menyimpan sebuah rahasia besar: airnya
+        <strong>tidak pernah habis</strong> meski dipakai miliaran makhluk hidup selama jutaan tahun.
+        Mengapa bisa begitu? Ternyata ada sebuah daur abadi yang bekerja tanpa henti — <strong>Siklus Air</strong>.
+        Ayo selidiki rahasianya melalui materi, laboratorium maya, puzzle, dan misi evaluasi!
+      </p>
+      <div class="hero-badges">
+        <span>📚 Materi Lengkap</span>
+        <span>🧪 Lab Maya Interaktif</span>
+        <span>🧩 Puzzle Drag &amp; Drop</span>
+        <span>🏅 Badge &amp; Koin</span>
+      </div>
+      <div class="hero-cta">
+        <button class="btn btn-light" onclick="go('tujuan')">🎯 Mulai Petualangan</button>
+        <button class="btn btn-amber" onclick="go('lab')">🧪 Coba Lab Maya</button>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="section-head">
+        <div class="ico">🗺️</div>
+        <div>
+          <h2>Peta Misi Pengetahuan</h2>
+          <p style="margin:0;font-size:.86rem;color:var(--muted)">Selesaikan setiap pos untuk membuka lencana penjelajah!</p>
+        </div>
+      </div>
+      <div class="map-grid" id="missionMap">
+        <div class="map-node" data-target="tujuan">
+          <span class="check">✓</span>
+          <span class="mn-ico">🎯</span>
+          <div class="mn-title">Pos 1 — Tujuan</div>
+          <div class="mn-sub">Apa yang akan kamu kuasai?</div>
+        </div>
+        <div class="map-node" data-target="materi">
+          <span class="check">✓</span>
+          <span class="mn-ico">📚</span>
+          <div class="mn-title">Pos 2 — Materi</div>
+          <div class="mn-sub">Modul siklus air lengkap</div>
+        </div>
+        <div class="map-node" data-target="lab">
+          <span class="check">✓</span>
+          <span class="mn-ico">🧪</span>
+          <div class="mn-title">Pos 3 — Lab Maya</div>
+          <div class="mn-sub">Uji variabel &amp; amati</div>
+        </div>
+        <div class="map-node" data-target="puzzle">
+          <span class="check">✓</span>
+          <span class="mn-ico">🧩</span>
+          <div class="mn-title">Pos 4 — Puzzle</div>
+          <div class="mn-sub">Rangkai tahapan daur</div>
+        </div>
+        <div class="map-node" data-target="evaluasi">
+          <span class="check">✓</span>
+          <span class="mn-ico">📝</span>
+          <div class="mn-title">Pos 5 — Evaluasi</div>
+          <div class="mn-sub">Uji pemahamanmu!</div>
+        </div>
+      </div>
+      <div style="margin-top:16px;display:flex;gap:8px;flex-wrap:wrap;align-items:center">
+        <span class="pill green" id="badgeProgress">🏅 Progres Misi: 0 / 5</span>
+        <span class="pill amber" id="badgeScore">⭐ Skor Terbaik: 0</span>
+      </div>
+    </div>
+
+    <div class="card soft">
+      <div class="section-head">
+        <div class="ico">💡</div>
+        <div><h2>Tahukah Kamu?</h2></div>
+      </div>
+      <div class="summary-cards">
+        <div class="summary-card">
+          <div class="sc-ico">🌊</div>
+          <div class="sc-t">71% Permukaan Bumi</div>
+          <div class="sc-d">Tertutup air, tetapi sebagian besar berupa air laut asin yang tidak bisa langsung diminum.</div>
+        </div>
+        <div class="summary-card">
+          <div class="sc-ico">💧</div>
+          <div class="sc-t">Kurang dari 3%</div>
+          <div class="sc-d">Air tawar di Bumi, dan sebagian besar terperangkap di gletser serta tudung es kutub.</div>
+        </div>
+        <div class="summary-card">
+          <div class="sc-ico">🌳</div>
+          <div class="sc-t">Hutan = Pompa Raksasa</div>
+          <div class="sc-d">Vegetasi melepaskan uap air lewat stomata daun, menjaga hujan tetap turun di daratan.</div>
+        </div>
+        <div class="summary-card">
+          <div class="sc-ico">♻️</div>
+          <div class="sc-t">Daur Abadi</div>
+          <div class="sc-d">Air terus berputar: laut → awan → hujan → tanah → laut. Tidak ada air yang benar-benar hilang.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       VIEW: TUJUAN
+  ============================================================= -->
+  <section id="view-tujuan" class="view">
+    <div class="card">
+      <div class="section-head">
+        <div class="ico">🎯</div>
+        <div>
+          <h2>Tujuan Pembelajaran</h2>
+          <span class="pill">IPAS • Fase C • Kelas 5</span>
+        </div>
+      </div>
+      <div class="info-box">
+        <strong>🎓 Capaian Kompetensi Utama</strong>
+        <p style="margin:8px 0 0">
+          Peserta didik mampu <strong>menganalisis tahapan siklus air</strong>
+          (evaporasi, kondensasi, presipitasi, dan infiltrasi) serta
+          <strong>dampaknya terhadap kelestarian lingkungan</strong> dan
+          ketersediaan air bersih di bumi.
+        </p>
+      </div>
+
+      <h3>📌 Indikator Ketercapaian</h3>
+      <div class="summary-cards">
+        <div class="summary-card">
+          <div class="sc-ico">1️⃣</div>
+          <div class="sc-t">Mengidentifikasi</div>
+          <div class="sc-d">Menyebutkan dan menjelaskan urutan tahapan siklus air dengan benar.</div>
+        </div>
+        <div class="summary-card">
+          <div class="sc-ico">2️⃣</div>
+          <div class="sc-t">Menganalisis</div>
+          <div class="sc-d">Menganalisis hubungan sebab-akibat antara aktivitas manusia dan gangguan siklus air.</div>
+        </div>
+        <div class="summary-card">
+          <div class="sc-ico">3️⃣</div>
+          <div class="sc-t">Mengevaluasi</div>
+          <div class="sc-d">Menilai dampak deforestasi dan betonisasi terhadap ketersediaan air tanah.</div>
+        </div>
+        <div class="summary-card">
+          <div class="sc-ico">4️⃣</div>
+          <div class="sc-t">Merancang Solusi</div>
+          <div class="sc-d">Mengusulkan tindakan nyata untuk menjaga kelestarian siklus air di lingkungan sekitar.</div>
+        </div>
+      </div>
+
+      <div class="highlight" style="margin-top:18px">
+        <strong>🌟 Pertanyaan Pemandu Misi</strong>
+        <p style="margin:8px 0 0">
+          Jika air terus dipakai, mengapa persediaannya tidak pernah habis?
+          Apa yang terjadi pada siklus air jika hutan di daerah hulu ditebang habis?
+          Ayo temukan jawabannya melalui petualangan ini!
+        </p>
+      </div>
+
+      <div style="margin-top:18px;display:flex;gap:10px;flex-wrap:wrap">
+        <button class="btn btn-primary" onclick="go('materi')">📚 Lanjut ke Materi</button>
+        <button class="btn btn-light" onclick="go('lab')">🧪 Langsung ke Lab Maya</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       VIEW: MATERI
+  ============================================================= -->
+  <section id="view-materi" class="view">
+    <div class="card">
+      <div class="section-head">
+        <div class="ico">📚</div>
+        <div>
+          <h2>Modul Pembelajaran Mandiri</h2>
+          <span class="pill cyan">📖 Siklus Air &amp; Kelestarian Lingkungan</span>
+        </div>
+      </div>
+
+      <div class="materi-body">
+
+        <h3>🌍 BAB I — Pendahuluan dan Konsep Dasar</h3>
+        <p>
+          Air merupakan kebutuhan paling mendasar bagi seluruh tatanan kehidupan di muka bumi.
+          Sebagian besar permukaan planet kita, yaitu sekitar <strong>71 persen</strong>, tertutup
+          oleh hamparan perairan. Kendati demikian, sebagian besar air tersebut adalah air laut
+          asin yang tidak dapat langsung dikonsumsi manusia atau dimanfaatkan untuk irigasi
+          tanaman pangan tanpa proses desalinasi yang rumit. Air tawar alami yang dapat
+          dimanfaatkan langsung oleh makhluk hidup jumlahnya sangat terbatas, yakni
+          <strong>kurang dari tiga persen</strong> dari total volume air bumi, dan sebagian
+          besarnya terperangkap dalam bentuk gletser serta tudung es kutub abadi.
+        </p>
+        <p>
+          Pertanyaan esensial yang muncul adalah: mengapa persediaan air tawar di daratan tidak
+          pernah habis meskipun telah digunakan oleh miliaran manusia, hewan, dan tumbuhan
+          selama jutaan tahun? Jawabannya terletak pada keteraturan alam semesta yang luar biasa,
+          yaitu adanya mekanisme sirkulasi berkelanjutan yang dikenal sebagai
+          <strong>Siklus Hidrologi</strong> atau <strong>Siklus Air</strong>. Siklus air adalah
+          pergerakan sirkular molekul air secara dinamis dan berkesinambungan dari permukaan bumi
+          ke atmosfer dan kembali lagi ke daratan serta lautan. Melalui siklus inilah kemurnian
+          air tawar diperbarui secara konstan oleh alam melalui proses penyulingan termal alami.
+        </p>
+
+        <div class="info-box">
+          <strong>💡 Inti Konsep Bab I</strong>
+          <p style="margin:8px 0 0">
+            Air di Bumi tidak pernah "habis" karena ia berputar dalam sebuah daur tertutup.
+            Energi Matahari menjadi penggerak utamanya, sedangkan gravitasi bumi menjadi penariknya kembali ke daratan.
+          </p>
+        </div>
+
+        <h3>💧 BAB II — Tahap-Tahap Utama dalam Sirkulasi Siklus Air</h3>
+        <p>
+          Siklus air melibatkan pertukaran energi panas matahari secara intensif yang memicu
+          perubahan wujud zat cair menjadi gas dan kembali menjadi cair atau padat. Berikut
+          adalah rangkaian tahapan saintifik yang berlangsung secara simultan:
+        </p>
+
+        <h4>1. Evaporasi (Penguapan Permukaan Terbuka)</h4>
+        <p>
+          Radiasi sinar matahari memanaskan permukaan samudra, laut, danau, waduk, dan sungai.
+          Panas ini meningkatkan energi kinetik molekul air sehingga ikatan antarmolekul
+          merenggang dan molekul air cair berubah wujud menjadi uap air tak kasat mata yang
+          terbang naik menuju lapisan troposfer.
+        </p>
+
+        <h4>2. Transpirasi (Penguapan Organik Tumbuhan)</h4>
+        <p>
+          Bukan hanya badan air yang mengalami penguapan. Pepohonan dan vegetasi hutan menyerap
+          air melalui perakaran tanah, lalu melepaskan kelebihan air melalui celah stomata daun
+          dalam bentuk uap air. Hutan tropis yang lebat berperan layaknya
+          <strong>"pompa uap air raksasa"</strong> yang menjaga kestabilan iklim mikro dan
+          curah hujan regional.
+        </p>
+
+        <h4>3. Evapotranspirasi</h4>
+        <p>
+          Istilah gabungan yang mendeskripsikan akumulasi total penguapan air dari daratan,
+          tanah basah, serta transpirasi seluruh vegetasi tanaman ke atmosfer bumi.
+        </p>
+
+        <h4>4. Kondensasi (Pembentukan Partikel Awan)</h4>
+        <p>
+          Seiring bertambahnya ketinggian di atmosfer, suhu udara mengalami penurunan secara
+          teratur. Uap air yang naik akan mengalami pendinginan hingga mencapai
+          <em>titik embun (dew point)</em>. Pada titik ini, uap air melepaskan energi kalor dan
+          berubah kembali menjadi miliaran tetes air mikroskopis atau kristal es halus. Tetesan
+          air ini menempel pada partikel debu melayang yang disebut
+          <strong>inti kondensasi awan (aerosol)</strong>, lalu berkumpul membentuk formasi awan
+          tebal di angkasa.
+        </p>
+
+        <h4>5. Presipitasi (Jatuhnya Curah Hujan)</h4>
+        <p>
+          Di dalam gumpalan awan, tetes-tetes air bertumbukan dan bergabung menjadi ukuran yang
+          semakin besar dan berat. Ketika daya angkat arus udara naik (<em>updraft</em>) sudah
+          tidak lagi mampu menahan berat massa air tersebut, gravitasi bumi akan menarik tetesan
+          air jatuh ke bumi. Peristiwa jatuhnya air dari awan ke daratan inilah yang kita kenal
+          sebagai <strong>presipitasi</strong>, yang dapat berupa hujan cair, salju, maupun
+          butiran es tergantung suhu lapisan udara yang dilaluinya.
+        </p>
+
+        <h4>6. Infiltrasi dan Perkolasi (Penyerapan Air ke Tanah)</h4>
+        <p>
+          Air hujan yang membasahi permukaan daratan sebagian besar akan meresap ke dalam
+          pori-pori tanah melalui gaya kapilaritas dan gravitasi, proses ini disebut
+          <strong>infiltrasi</strong>. Aliran air yang terus bergerak menembus lapisan batuan
+          yang lebih dalam disebut <strong>perkolasi</strong>, hingga akhirnya membentuk
+          cadangan air tanah dalam (<em>akuifer</em>) yang menjadi sumber mata air alami dan
+          sumur gali.
+        </p>
+
+        <h4>7. Limpasan Permukaan (Surface Runoff)</h4>
+        <p>
+          Air presipitasi yang jatuh di atas tanah jenuh, permukaan beraspal, bebatuan kedap air,
+          atau lereng pegunungan terjal tidak dapat meresap ke dalam tanah. Air ini mengalir
+          deras di atas permukaan tanah menuju parit, sungai kecil, danau, hingga kembali
+          bermuara ke samudra luas.
+        </p>
+
+        <div class="highlight">
+          <strong>⚡ Rangkuman Cepat Tahapan Siklus Air</strong>
+          <ol style="margin:8px 0 0 20px">
+            <li><strong>Evaporasi &amp; Transpirasi</strong> — air menguap karena panas Matahari.</li>
+            <li><strong>Kondensasi</strong> — uap air mendingin menjadi butiran awan.</li>
+            <li><strong>Presipitasi</strong> — air jatuh kembali sebagai hujan.</li>
+            <li><strong>Infiltrasi</strong> — air meresap ke dalam pori-pori tanah.</li>
+            <li><strong>Limpasan</strong> — air mengalir di permukaan kembali menuju laut.</li>
+          </ol>
+        </div>
+
+        <h3>🌏 BAB III — Hubungan Kausalitas Lingkungan dan Dampak Aktivitas Manusia</h3>
+        <p>
+          Keseimbangan siklus hidrologi sangat dipengaruhi oleh kelestarian ekosistem daratan.
+          Dalam era modern, aktivitas manusia seringkali merusak rantai siklus air alami dengan
+          cara:
+        </p>
+        <ul>
+          <li>
+            <strong>Penggundulan Hutan (Deforestasi):</strong> Hilangnya tutupan vegetasi
+            menurunkan laju transpirasi dan menghilangkan daya serap akar tanah. Akibatnya, air
+            hujan langsung menjadi limpasan deras yang mengikis lapisan tanah subur (erosi) dan
+            menyebabkan banjir bandang di kawasan hilir.
+          </li>
+          <li>
+            <strong>Betonisasi Kawasan Urban:</strong> Penutupan lahan terbuka hijau dengan aspal
+            dan semen menghalangi proses infiltrasi. Air tanah tidak terisi ulang, menyebabkan
+            penurunan muka air tanah dan kelangkaan air bersih sumur saat musim kemarau.
+          </li>
+          <li>
+            <strong>Perubahan Iklim Global:</strong> Kenaikan temperatur rata-rata bumi
+            mempercepat laju evaporasi secara ekstrem, memicu anomali cuaca seperti kekeringan
+            berkepanjangan di beberapa belahan dunia dan badai hujan berintensitas ekstrem di
+            wilayah lain.
+          </li>
+        </ul>
+
+        <div class="info-box">
+          <strong>🔬 Prinsip Kausalitas Ilmiah</strong>
+          <p style="margin:8px 0 0">
+            Setiap perubahan pada satu komponen siklus air akan memengaruhi komponen lainnya.
+            Berkurangnya daerah resapan → limpasan meningkat → banjir di hilir.
+            Inilah yang disebut <strong>kesetimbangan sistem dinamis</strong>: sistem akan
+            berusaha menyeimbangkan diri, tetapi bila gangguan terlalu besar, keseimbangan itu
+            rusak dan menimbulkan bencana.
+          </p>
+        </div>
+
+        <h3>✅ BAB IV — Rangkuman Inti dan Refleksi Belajar Siswa</h3>
+        <p>Kesimpulan utama yang harus dipahami oleh peserta didik adalah:</p>
+        <ol>
+          <li>Air di bumi bergerak dalam daur tertutup yang abadi dan digerakkan oleh energi matahari serta gaya gravitasi.</li>
+          <li>Tahapan utama siklus air mencakup Evaporasi/Transpirasi, Kondensasi, Presipitasi, Infiltrasi, dan Limpasan.</li>
+          <li>Kualitas dan kuantitas air tawar sangat bergantung pada kelestarian daerah tangkapan air (<em>catchment area</em>) dan kesadaran manusia dalam menghemat serta menjaga kebersihan sumber daya air.</li>
+        </ol>
+
+        <div class="summary-cards" style="margin-top:18px">
+          <div class="summary-card">
+            <div class="sc-ico">🌱</div>
+            <div class="sc-t">Aksi Nyata 1</div>
+            <div class="sc-d">Tanam pohon dan buat lubang biopori di halaman rumah untuk mempercepat infiltrasi.</div>
+          </div>
+          <div class="summary-card">
+            <div class="sc-ico">🚰</div>
+            <div class="sc-t">Aksi Nyata 2</div>
+            <div class="sc-d">Hemat air bersih: matikan keran saat tidak dipakai, perbaiki kebocoran pipa.</div>
+          </div>
+          <div class="summary-card">
+            <div class="sc-ico">🗑️</div>
+            <div class="sc-t">Aksi Nyata 3</div>
+            <div class="sc-d">Jangan membuang sampah ke sungai agar aliran air tidak tersumbat dan banjir.</div>
+          </div>
+          <div class="summary-card">
+            <div class="sc-ico">🏞️</div>
+            <div class="sc-t">Aksi Nyata 4</div>
+            <div class="sc-d">Jaga daerah resapan air di hulu sungai agar siklus air tetap seimbang.</div>
+          </div>
+        </div>
+
+      </div>
+
+      <div style="margin-top:20px;display:flex;gap:10px;flex-wrap:wrap">
+        <button class="btn btn-primary" onclick="go('lab')">🧪 Uji di Lab Maya</button>
+        <button class="btn btn-light" onclick="go('puzzle')">🧩 Main Puzzle</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       VIEW: LAB MAYA
+  ============================================================= -->
+  <section id="view-lab" class="view">
+    <div class="card">
+      <div class="section-head">
+        <div class="ico">🧪</div>
+        <div>
+          <h2>Laboratorium Maya &amp; Simulasi Digital</h2>
+          <span class="pill cyan">🔬 Siklus Air dan Kelestarian Lingkungan</span>
+        </div>
+      </div>
+      <p style="font-size:.88rem;color:var(--muted)">
+        Atur variabel di panel kanan, lalu tekan <strong>▶️ Jalankan Simulasi</strong>.
+        Amati bagaimana perubahan <em>Intensitas Stimulus</em>, <em>Faktor Regulasi</em>, dan
+        <em>Durasi Respon</em> memengaruhi kesetimbangan siklus air.
+      </p>
+
+      <div class="lab-wrap" style="margin-top:16px">
+        <!-- KIRI: KANVAS -->
+        <div>
+          <div class="canvas-box">
+            <canvas id="labCanvas"></canvas>
+            <div class="canvas-badge" id="labStatus">⏸️ Siap Dijalankan</div>
+          </div>
+          <div class="readout" id="labReadout">
+            <div class="ro"><div class="ro-v" id="roEvap">0</div><div class="ro-l">💨 Evaporasi</div></div>
+            <div class="ro"><div class="ro-v" id="roAwan">0</div><div class="ro-l">☁️ Awan</div></div>
+            <div class="ro"><div class="ro-v" id="roHujan">0</div><div class="ro-l">🌧️ Hujan</div></div>
+            <div class="ro"><div class="ro-v" id="roInfil">0</div><div class="ro-l">🌱 Infiltrasi</div></div>
+            <div class="ro"><div class="ro-v" id="roLimpas">0</div><div class="ro-l">🌊 Limpasan</div></div>
+            <div class="ro"><div class="ro-v" id="roStabil">0</div><div class="ro-l">⚖️ Kestabilan</div></div>
+          </div>
+        </div>
+
+        <!-- KANAN: KONTROL -->
+        <div>
+          <div class="card soft" style="margin-bottom:0">
+            <h3 style="margin-top:0">🎛️ Panel Variabel</h3>
+
+            <div class="ctrl-group">
+              <label for="varStim">☀️ Intensitas Stimulus <span class="val" id="valStim">60 Poin</span></label>
+              <input type="range" id="varStim" min="10" max="100" step="5" value="60">
+              <div style="font-size:.72rem;color:var(--muted);margin-top:4px">Besar energi/tekanan yang diberikan pada sistem siklus air.</div>
+            </div>
+
+            <div class="ctrl-group">
+              <label for="varReg">🌳 Faktor Regulasi / Stabilitas <span class="val" id="valReg">50 %</span></label>
+              <input type="range" id="varReg" min="0" max="100" step="5" value="50">
+              <div style="font-size:.72rem;color:var(--muted);margin-top:4px">Kemampuan ekosistem menyerap &amp; menyeimbangkan air (vegetasi, tanah resapan).</div>
+            </div>
+
+            <div class="ctrl-group">
+              <label for="varDur">⏱️ Durasi Respon / Pengamatan <span class="val" id="valDur">20 Detik</span></label>
+              <input type="range" id="varDur" min="5" max="60" step="5" value="20">
+              <div style="font-size:.72rem;color:var(--muted);margin-top:4px">Lama waktu pengamatan respon sistem.</div>
+            </div>
+
+            <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:6px">
+              <button class="btn btn-green btn-sm" id="btnRun">▶️ Jalankan Simulasi</button>
+              <button class="btn btn-light btn-sm" id="btnReset">🔄 Reset</button>
+              <button class="btn btn-cyan btn-sm" id="btnLog">💾 Simpan Data</button>
+            </div>
+
+            <div class="gauge-list" style="margin-top:18px">
+              <div class="gauge">
+                <div class="g-top"><span>💨 Laju Evaporasi</span><span id="gvEvap">0%</span></div>
+                <div class="g-bar"><div class="g-fill" id="gfEvap" style="background:linear-gradient(90deg,#f59e0b,#fbbf24)"></div></div>
+              </div>
+              <div class="gauge">
+                <div class="g-top"><span>☁️ Pembentukan Awan</span><span id="gvAwan">0%</span></div>
+                <div class="g-bar"><div class="g-fill" id="gfAwan" style="background:linear-gradient(90deg,#94a3b8,#cbd5e1)"></div></div>
+              </div>
+              <div class="gauge">
+                <div class="g-top"><span>🌧️ Curah Hujan</span><span id="gvHujan">0%</span></div>
+                <div class="g-bar"><div class="g-fill" id="gfHujan" style="background:linear-gradient(90deg,#06b6d4,#22d3ee)"></div></div>
+              </div>
+              <div class="gauge">
+                <div class="g-top"><span>🌱 Infiltrasi (Resapan)</span><span id="gvInfil">0%</span></div>
+                <div class="g-bar"><div class="g-fill" id="gfInfil" style="background:linear-gradient(90deg,#10b981,#34d399)"></div></div>
+              </div>
+              <div class="gauge">
+                <div class="g-top"><span>🌊 Limpasan Permukaan</span><span id="gvLimpas">0%</span></div>
+                <div class="g-bar"><div class="g-fill" id="gfLimpas" style="background:linear-gradient(90deg,#3b82f6,#60a5fa)"></div></div>
+              </div>
+              <div class="gauge">
+                <div class="g-top"><span>⚖️ Indeks Kestabilan Sistem</span><span id="gvStabil">0%</span></div>
+                <div class="g-bar"><div class="g-fill" id="gfStabil" style="background:linear-gradient(90deg,#7c3aed,#a78bfa)"></div></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="info-box" style="margin-top:14px;font-size:.82rem">
+            <strong>🔬 Konsep Ilmiah yang Diuji</strong>
+            <p style="margin:6px 0 0">
+              <strong>Prinsip Kausalitas Ilmiah</strong> — sebab-akibat antar variabel.<br>
+              <strong>Kesetimbangan Sistem Dinamis</strong> — sistem berusaha stabil.<br>
+              <strong>Verifikasi Empiris</strong> — data pengamatan membuktikan teori.
+            </p>
+          </div>
+
+          <div class="card soft" style="margin-top:14px">
+            <h4 style="margin-top:0">📋 Poin Pengamatan</h4>
+            <ul style="font-size:.8rem;margin-left:18px;color:#334155">
+              <li>Perubahan stimulus berpengaruh langsung terhadap keluaran sistem.</li>
+              <li>Faktor regulasi yang optimal menghasilkan kestabilan berkelanjutan.</li>
+              <li>Data pengamatan memvalidasi prinsip teoritis pada modul materi.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       VIEW: PUZZLE
+  ============================================================= -->
+  <section id="view-puzzle" class="view">
+    <div class="card">
+      <div class="section-head">
+        <div class="ico">🧩</div>
+        <div>
+          <h2>Tantangan Puzzle Drag &amp; Drop</h2>
+          <span class="pill pink">Rangkai Tahapan Siklus Air</span>
+        </div>
+      </div>
+      <p style="font-size:.88rem;color:var(--muted)">
+        Seret (drag) setiap kartu konsep ke slot bernomor yang tepat, <strong>atau</strong> ketuk kartu lalu ketuk slot tujuan (untuk perangkat sentuh).
+        Susunlah urutan daur alami secara logis dan runtut!
+      </p>
+
+      <div class="puzzle-area" style="margin-top:16px">
+        <div>
+          <h4 style="margin-top:0">🎴 Kartu Konsep (Acak)</h4>
+          <div class="pool" id="puzzlePool"></div>
+        </div>
+        <div>
+          <h4 style="margin-top:0">🎯 Slot Urutan Tahapan</h4>
+          <div class="slots" id="puzzleSlots"></div>
+        </div>
+      </div>
+
+      <div style="margin-top:16px;display:flex;gap:10px;flex-wrap:wrap;align-items:center">
+        <button class="btn btn-light btn-sm" id="btnPuzzleReset">🔄 Acak Ulang</button>
+        <button class="btn btn-amber btn-sm" id="btnPuzzleHint">💡 Petunjuk</button>
+        <span class="pill" id="puzzleStatus">Terpasang: 0 / 5</span>
+      </div>
+
+      <div id="puzzleFeedback" class="feedback" style="margin-top:14px"></div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       VIEW: EVALUASI
+  ============================================================= -->
+  <section id="view-evaluasi" class="view">
+
+    <!-- INTRO -->
+    <div class="card" id="evalIntro">
+      <div class="section-head">
+        <div class="ico">📝</div>
+        <div>
+          <h2>Lembar Soal Evaluasi</h2>
+          <span class="pill amber">⏱️ 45 detik / soal • ❤️ 3 Nyawa • ⭐ 10 poin / soal</span>
+        </div>
+      </div>
+      <p>
+        Uji pemahamanmu tentang <strong>Siklus Air dan Kelestarian Lingkungan</strong>!
+        Terdapat <strong>10 soal</strong> dengan tingkat kognitif LOTS, MOTS, HOTS, dan Literasi.
+      </p>
+      <div class="summary-cards">
+        <div class="summary-card"><div class="sc-ico">❤️</div><div class="sc-t">3 Nyawa</div><div class="sc-d">Jawaban salah mengurangi 1 nyawa, tetapi kamu tetap mendapat petunjuk.</div></div>
+        <div class="summary-card"><div class="sc-ico">⏱️</div><div class="sc-t">Timer 45 Detik</div><div class="sc-d">Setiap soal memiliki batas waktu. Waktu habis dihitung salah.</div></div>
+        <div class="summary-card"><div class="sc-ico">🏅</div><div class="sc-t">Badge &amp; Koin</div><div class="sc-d">Kumpulkan skor setinggi mungkin untuk mendapatkan lencana Master Siklus Air.</div></div>
+      </div>
+      <div class="highlight" style="margin-top:16px">
+        <strong>🔐 Sebelum memulai</strong>
+        <p style="margin:6px 0 0">Kamu akan diminta mengisi <strong>Nama</strong>, <strong>Kelas</strong>, dan <strong>Kunci Evaluasi</strong> terlebih dahulu.</p>
+      </div>
+      <button class="btn btn-primary" style="margin-top:8px" id="btnStartEval">🚀 Mulai Kerjakan Soal / Evaluasi</button>
+    </div>
+
+    <!-- QUIZ -->
+    <div id="evalQuiz" style="display:none">
+      <div class="quiz-head">
+        <div class="qh-item">📝 Soal <span id="qNum">1</span>/<span id="qTotal">10</span></div>
+        <div class="qh-item" id="qLives">❤️❤️❤️</div>
+        <div class="qh-item">⭐ <span id="qScore">0</span></div>
+        <div class="qh-item">⏱️ <span id="qTime">45</span>s</div>
+      </div>
+      <div class="quiz-body">
+        <div class="timer-bar"><div class="timer-fill" id="timerFill"></div></div>
+        <div id="qIcon" style="font-size:1.8rem;margin-bottom:6px"></div>
+        <div id="qImageWrap"></div>
+        <div class="q-text" id="qText">—</div>
+        <div class="options" id="qOptions"></div>
+        <div class="feedback" id="qFeedback"></div>
+        <div style="margin-top:16px;text-align:right">
+          <button class="btn btn-primary btn-sm" id="btnNextQ" style="display:none">Soal Berikutnya ➡️</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- RESULT -->
+    <div id="evalResult" style="display:none"></div>
+  </section>
+
+  <!-- ============================================================
+       VIEW: GURU
+  ============================================================= -->
+  <section id="view-guru" class="view">
+    <div class="card">
+      <div class="section-head">
+        <div class="ico">🔐</div>
+        <div>
+          <h2>Mode Guru / Administrator</h2>
+          <span class="pill pink">Akses Terbatas</span>
+        </div>
+      </div>
+
+      <div id="guruLock">
+        <p style="font-size:.88rem;color:var(--muted)">Masukkan kata sandi guru untuk membuka panel rekap, kunci jawaban, dan ekspor Excel.</p>
+        <div class="field" style="max-width:320px">
+          <label>🔑 Kata Sandi Guru</label>
+          <input type="password" id="guruPass" placeholder="Masukkan kata sandi...">
+        </div>
+        <button class="btn btn-primary" id="btnGuruLogin">🔓 Buka Panel Guru</button>
+      </div>
+
+      <div id="guruPanel" style="display:none">
+        <div style="display:flex;gap:10px;flex-wrap:wrap;margin-bottom:16px">
+          <button class="btn btn-green btn-sm" id="btnExportXls">📊 Export Excel (Multi-Sheet)</button>
+          <button class="btn btn-cyan btn-sm" id="btnExportCsv">📥 Export CSV Hasil</button>
+          <button class="btn btn-amber btn-sm" id="btnShowKeys">🔑 Lihat Kunci Jawaban</button>
+          <button class="btn btn-light btn-sm" id="btnRefreshGuru">🔄 Muat Ulang Data</button>
+          <button class="btn btn-red btn-sm" id="btnClearData">🗑️ Hapus Data Siswa</button>
+        </div>
+
+        <div class="summary-cards" style="margin-bottom:18px">
+          <div class="summary-card"><div class="sc-ico">👥</div><div class="sc-t" id="statSiswa">0 Siswa</div><div class="sc-d">Jumlah percobaan evaluasi tercatat.</div></div>
+          <div class="summary-card"><div class="sc-ico">📈</div><div class="sc-t" id="statRata">0</div><div class="sc-d">Rata-rata skor evaluasi.</div></div>
+          <div class="summary-card"><div class="sc-ico">🏆</div><div class="sc-t" id="statMax">0</div><div class="sc-d">Skor tertinggi.</div></div>
+          <div class="summary-card"><div class="sc-ico">🧪</div><div class="sc-t" id="statLab">0</div><div class="sc-d">Data percobaan lab maya tersimpan.</div></div>
+        </div>
+
+        <h3>📊 Rekap Hasil Evaluasi Siswa</h3>
+        <div class="table-wrap">
+          <table id="tblHasil">
+            <thead><tr><th>No</th><th>👤 Nama</th><th>🏫 Kelas</th><th>⭐ Skor</th><th>✅ Benar</th><th>❌ Salah</th><th>📅 Tanggal</th></tr></thead>
+            <tbody></tbody>
+          </table>
+        </div>
+
+        <h3>🔑 Kunci Jawaban &amp; Pembahasan (Terlindungi)</h3>
+        <div id="keyArea" style="display:none">
+          <div class="table-wrap">
+            <table id="tblKunci">
+              <thead><tr><th>No</th><th>Level</th><th>Soal</th><th>Kunci</th><th>Pembahasan</th></tr></thead>
+              <tbody></tbody>
+            </table>
+          </div>
+        </div>
+        <div id="keyLocked" class="empty-state">🔒 Klik <strong>“Lihat Kunci Jawaban”</strong> untuk menampilkan kunci &amp; pembahasan.</div>
+
+        <h3>🧪 Riwayat Percobaan Lab Maya</h3>
+        <div class="table-wrap">
+          <table id="tblLab">
+            <thead><tr><th>No</th><th>👤 Nama</th><th>☀️ Stimulus</th><th>🌳 Regulasi</th><th>⏱️ Durasi</th><th>💨 Evap</th><th>🌱 Infil</th><th>🌊 Limpas</th><th>⚖️ Stabil</th><th>📅 Tanggal</th></tr></thead>
+            <tbody></tbody>
+          </table>
+        </div>
+
+        <h3>🧩 Riwayat Puzzle</h3>
+        <div class="table-wrap">
+          <table id="tblPuzzle">
+            <thead><tr><th>No</th><th>👤 Nama</th><th>🎯 Status</th><th>📅 Tanggal</th></tr></thead>
+            <tbody></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <div>🚀 <strong>MPI IPAS — Misi Siklus Air dan Ekosistem</strong> • Fase C • Kelas 5 SD</div>
+  <div style="margin-top:5px">Dikembangkan oleh <strong>Administrator</strong> © 2026 • Multimedia Pembelajaran Interaktif</div>
+  <div style="margin-top:5px;font-size:.75rem">🎵 Dilengkapi efek suara edukatif • 📊 Tersedia ekspor rekap Excel untuk guru</div>
+</footer>
+
+<!-- ================= MODAL LOGIN EVALUASI ================= -->
+<div class="modal" id="modalLogin">
+  <div class="modal-box">
+    <div style="text-align:center;margin-bottom:14px">
+      <div style="font-size:2.6rem">🎓</div>
+      <h3 style="margin:0">Data Peserta Evaluasi</h3>
+      <p style="font-size:.83rem;color:var(--muted);margin-top:4px">Isi data dirimu sendiri sebelum memulai kuis.</p>
+    </div>
+    <div class="field">
+      <label>👤 Nama Lengkap Siswa</label>
+      <input type="text" id="inpNama" placeholder="Contoh: Nadia Putri" autocomplete="off">
+    </div>
+    <div class="field">
+      <label>🏫 Kelas</label>
+      <select id="inpKelas">
+        <option value="">— Pilih Kelas —</option>
+        <option>Kelas 5A</option>
+        <option>Kelas 5B</option>
+        <option>Kelas 5C</option>
+        <option>Kelas 6A</option>
+        <option>Kelas 6B</option>
+      </select>
+    </div>
+    <div class="field">
+      <label>🔑 Kunci Evaluasi</label>
+      <input type="text" id="inpKunci" placeholder="Masukkan kunci dari guru..." autocomplete="off">
+      <div style="font-size:.72rem;color:var(--muted);margin-top:5px">💡 Kunci demo: <strong>SIKLUSAIR</strong></div>
+    </div>
+    <div style="display:flex;gap:9px;flex-wrap:wrap;margin-top:6px">
+      <button class="btn btn-primary" id="btnLoginGo" style="flex:1">✅ Masuk &amp; Kerjakan</button>
+      <button class="btn btn-light" id="btnLoginCancel">Batal</button>
+    </div>
+  </div>
+</div>
+
+<!-- ================= MODAL PEMBAHASAN ================= -->
+<div class="modal" id="modalBahasan">
+  <div class="modal-box">
+    <div style="text-align:center;margin-bottom:14px">
+      <div style="font-size:2.4rem">🔐</div>
+      <h3 style="margin:0">Buka Kunci Pembahasan</h3>
+      <p style="font-size:.83rem;color:var(--muted);margin-top:4px">Masukkan kunci khusus untuk melihat pembahasan soal.</p>
+    </div>
+    <div class="field">
+      <label>🔑 Kunci Pembahasan</label>
+      <input type="password" id="inpBahasan" placeholder="Masukkan kunci...">
+    </div>
+    <div style="display:flex;gap:9px;flex-wrap:wrap">
+      <button class="btn btn-primary" id="btnBahasanGo" style="flex:1">🔓 Buka Pembahasan</button>
+      <button class="btn btn-light" id="btnBahasanCancel">Tutup</button>
+    </div>
+  </div>
+</div>
+
+<div id="toast"></div>
+
+<script>
+/* ============================================================
+   1. SOUND ENGINE (Web Audio API — tanpa file eksternal)
+============================================================ */
+const SFX = (() => {
+  let ctx = null, sfxOn = true, musicOn = true, musicTimer = null, mi = 0;
+  function ac(){
+    if(!ctx){
+      const AC = window.AudioContext || window.webkitAudioContext;
+      if(!AC) return null;
+      ctx = new AC();
+    }
+    if(ctx.state === 'suspended') ctx.resume();
+    return ctx;
+  }
+  function tone(freq, dur=0.12, type='sine', vol=0.12, delay=0){
+    if(!sfxOn) return;
+    const c = ac(); if(!c) return;
+    const t0 = c.currentTime + delay;
+    const o = c.createOscillator(), g = c.createGain();
+    o.type = type;
+    o.frequency.setValueAtTime(freq, t0);
+    g.gain.setValueAtTime(0.0001, t0);
+    g.gain.linearRampToValueAtTime(vol, t0 + 0.012);
+    g.gain.exponentialRampToValueAtTime(0.0001, t0 + dur);
+    o.connect(g); g.connect(c.destination);
+    o.start(t0); o.stop(t0 + dur + 0.03);
+  }
+  function sweep(f1, f2, dur=0.3, vol=0.1){
+    if(!sfxOn) return;
+    const c = ac(); if(!c) return;
+    const t0 = c.currentTime;
+    const o = c.createOscillator(), g = c.createGain();
+    o.type='sine';
+    o.frequency.setValueAtTime(f1, t0);
+    o.frequency.exponentialRampToValueAtTime(f2, t0+dur);
+    g.gain.setValueAtTime(vol, t0);
+    g.gain.exponentialRampToValueAtTime(0.0001, t0+dur);
+    o.connect(g); g.connect(c.destination);
+    o.start(t0); o.stop(t0+dur+0.03);
+  }
+  const melody = [523.25,587.33,659.25,783.99,659.25,587.33,523.25,440,
+                  523.25,659.25,783.99,880,783.99,659.25,587.33,523.25];
+  function startMusic(){
+    if(musicTimer) return;
+    musicTimer = setInterval(()=>{
+      if(!musicOn || !sfxOn) return;
+      const n = melody[mi % melody.length];
+      tone(n, 0.5, 'triangle', 0.028);
+      if(mi % 4 === 0) tone(n/2, 0.8, 'sine', 0.022);
+      mi++;
+    }, 480);
+  }
+  return {
+    init(){ ac(); startMusic(); },
+    click(){ tone(660, 0.07, 'square', 0.06); },
+    nav(){ tone(520,0.08,'sine',0.07); tone(780,0.09,'sine',0.06,0.07); },
+    place(){ tone(700,0.09,'triangle',0.09); tone(950,0.09,'triangle',0.07,0.07); },
+    correct(){ [523.25,659.25,783.99,1046.5].forEach((f,i)=>tone(f,0.24,'sine',0.11,i*0.075)); },
+    wrong(){ tone(220,0.2,'sawtooth',0.09); tone(160,0.3,'sawtooth',0.08,0.13); },
+    win(){ [523.25,659.25,783.99,1046.5,1318.5].forEach((f,i)=>tone(f,0.35,'triangle',0.12,i*0.13)); },
+    lose(){ [440,392,349,294,220].forEach((f,i)=>tone(f,0.3,'sawtooth',0.08,i*0.13)); },
+    tick(){ tone(880,0.045,'square',0.04); },
+    start(){ sweep(300,900,0.35,0.1); },
+    pop(){ tone(1000,0.06,'sine',0.08); },
+    toggle(){
+      sfxOn = !sfxOn;
+      if(!sfxOn && musicTimer){ clearInterval(musicTimer); musicTimer=null; }
+      if(sfxOn) startMusic();
+      return sfxOn;
+    },
+    isOn(){ return sfxOn; }
+  };
+})();
+document.addEventListener('click', () => SFX.init(), { once:true });
+
+/* ============================================================
+   2. DATA SOAL EVALUASI
+============================================================ */
+const QUESTIONS = [
+  {
+    id:'Q1', icon:'💧', level:'LOTS (C1-C2)',
+    question:'Perubahan wujud air dari permukaan laut menjadi uap air akibat panas matahari disebut ....',
+    options:['Evaporasi','Kondensasi','Presipitasi','Infiltrasi'],
+    correct:0,
+    explanation:'Evaporasi adalah proses penguapan air dari permukaan terbuka (laut, danau, sungai) akibat pemanasan energi matahari. Molekul air cair berubah menjadi uap air yang naik ke atmosfer.',
+    hint:'Ingat kata kunci "uap" — proses yang menghasilkan uap disebut evaporasi.'
+  },
+  {
+    id:'Q2', icon:'☁️', level:'LOTS (C1-C2)',
+    question:'Uap air yang naik ke atmosfer mengalami pendinginan dan berubah menjadi titik-titik air yang membentuk awan. Peristiwa ini disebut ....',
+    options:['Transpirasi','Kondensasi','Infiltrasi','Limpasan'],
+    correct:1,
+    explanation:'Kondensasi terjadi ketika uap air mendingin di ketinggian dan mencapai titik embun, lalu berubah kembali menjadi tetesan air mikroskopis yang menempel pada inti kondensasi (debu) dan membentuk awan.',
+    hint:'Awan terbentuk dari proses "pengembunan" uap air.'
+  },
+  {
+    id:'Q3', icon:'🌧️', level:'MOTS (C3)',
+    question:'Ketika awan sudah jenuh dan tidak mampu lagi menahan massa air, air jatuh kembali ke bumi. Peristiwa ini dinamakan ....',
+    options:['Evapotranspirasi','Perkolasi','Presipitasi','Kondensasi'],
+    correct:2,
+    explanation:'Presipitasi adalah jatuhnya air dari awan ke permukaan bumi akibat gravitasi. Bentuknya bisa berupa hujan cair, salju, atau butiran es tergantung suhu udara yang dilaluinya.',
+    hint:'Kata lain dari "curah hujan" dalam istilah ilmiah.'
+  },
+  {
+    id:'Q4', icon:'🌱', level:'LOTS (C1-C2)',
+    question:'Air hujan yang meresap ke dalam pori-pori tanah disebut ....',
+    options:['Limpasan permukaan','Infiltrasi','Transpirasi','Kondensasi'],
+    correct:1,
+    explanation:'Infiltrasi adalah proses meresapnya air ke dalam pori-pori tanah melalui gaya kapilaritas dan gravitasi. Jika air terus turun menembus batuan lebih dalam, prosesnya disebut perkolasi.',
+    hint:'Proses "menyerap" air ke dalam tanah.'
+  },
+  {
+    id:'Q5', icon:'🌳', level:'MOTS (C3)',
+    question:'Mengapa hutan tropis sering dijuluki sebagai "pompa uap air raksasa"?',
+    options:[
+      'Karena hutan menyimpan cadangan air di dalam batang pohon',
+      'Karena akar pohon memompa air langsung menuju sungai',
+      'Karena tumbuhan melepaskan uap air melalui stomata daun (transpirasi)',
+      'Karena hutan menahan hujan agar tidak jatuh ke tanah'
+    ],
+    correct:2,
+    explanation:'Melalui transpirasi, tumbuhan menyerap air dari tanah lalu melepaskan kelebihan air dalam bentuk uap melalui stomata daun. Hutan yang luas melepaskan uap air dalam jumlah sangat besar sehingga menjaga kelembapan dan curah hujan regional.',
+    hint:'Perhatikan peran stomata pada daun.'
+  },
+  {
+    id:'Q6', icon:'🏙️', level:'HOTS (C4-C6)',
+    question:'Sebuah kawasan resapan air di hulu sungai diubah menjadi perumahan dengan jalan beraspal. Dampak yang paling mungkin terjadi adalah ....',
+    options:[
+      'Infiltrasi meningkat sehingga mata air bertambah',
+      'Limpasan permukaan meningkat sehingga banjir di kawasan hilir',
+      'Transpirasi meningkat sehingga udara makin lembap',
+      'Curah hujan berhenti turun di kawasan tersebut'
+    ],
+    correct:1,
+    explanation:'Aspal dan beton bersifat kedap air sehingga menghalangi infiltrasi. Air hujan langsung mengalir di permukaan sebagai limpasan yang deras, memicu banjir di hilir dan mengikis lapisan tanah (erosi).',
+    hint:'Pikirkan sifat permukaan aspal yang tidak dapat menyerap air.'
+  },
+  {
+    id:'Q7', icon:'📊', level:'LITERASI & NUMERASI',
+    question:'Diketahui sekitar 71% permukaan bumi berupa perairan, namun hanya kurang dari 3% yang berupa air tawar dan sebagian besar terperangkap di gletser. Kesimpulan yang tepat dari data tersebut adalah ....',
+    options:[
+      'Air laut dapat langsung diminum manusia tanpa diolah',
+      'Air tawar yang mudah dimanfaatkan manusia jumlahnya sangat terbatas',
+      'Seluruh air tawar tersedia melimpah di sungai-sungai',
+      'Air di bumi akan segera habis dalam beberapa tahun'
+    ],
+    correct:1,
+    explanation:'Meskipun bumi tampak kaya air, air tawar yang mudah diakses manusia sangat sedikit. Karena itulah kita wajib menghemat air bersih dan menjaga kelestarian daerah tangkapan air.',
+    hint:'Bandingkan angka 71% (air laut) dengan kurang dari 3% (air tawar).'
+  },
+  {
+    id:'Q8', icon:'🔍', level:'MOTS (C3)',
+    question:'Perbedaan utama antara infiltrasi dan limpasan permukaan adalah ....',
+    options:[
+      'Infiltrasi mengalir di permukaan, sedangkan limpasan meresap ke tanah',
+      'Infiltrasi meresap ke dalam tanah, sedangkan limpasan mengalir di permukaan menuju sungai/laut',
+      'Keduanya merupakan proses yang sama persis',
+      'Infiltrasi terjadi di awan, sedangkan limpasan terjadi di laut'
+    ],
+    correct:1,
+    explanation:'Infiltrasi = air meresap masuk ke dalam tanah dan menjadi cadangan air tanah. Limpasan permukaan = air mengalir di atas permukaan tanah menuju parit, sungai, lalu kembali ke laut.',
+    hint:'"Infiltrasi" berkaitan dengan "masuk ke dalam".'
+  },
+  {
+    id:'Q9', icon:'🌡️', level:'HOTS (C4-C6)',
+    question:'Peningkatan suhu rata-rata bumi akibat perubahan iklim berdampak pada siklus air, yaitu ....',
+    options:[
+      'Evaporasi melambat dan hujan turun merata sepanjang tahun',
+      'Evaporasi makin cepat sehingga memicu kekeringan dan hujan berintensitas ekstrem',
+      'Siklus air berhenti total dan tidak lagi berlangsung',
+      'Seluruh air laut berubah menjadi es di kutub'
+    ],
+    correct:1,
+    explanation:'Suhu yang meningkat mempercepat laju evaporasi secara ekstrem. Akibatnya terjadi anomali cuaca: kekeringan panjang di satu wilayah, sekaligus badai hujan ekstrem di wilayah lain.',
+    hint:'Suhu naik → penguapan makin cepat → cuaca makin tidak menentu.'
+  },
+  {
+    id:'Q10', icon:'🤝', level:'HOTS (C4-C6)',
+    question:'Tindakan yang paling tepat untuk menjaga kelestarian siklus air di lingkungan sekitar adalah ....',
+    options:[
+      'Membeton seluruh halaman rumah agar bersih',
+      'Menebang hutan untuk memperluas lahan pertanian',
+      'Menanam pohon, membuat lubang biopori, dan menghemat penggunaan air',
+      'Membuang sampah rumah tangga ke sungai terdekat'
+    ],
+    correct:2,
+    explanation:'Menanam pohon dan membuat biopori meningkatkan infiltrasi serta transpirasi, sementara menghemat air menjaga ketersediaan air bersih. Inilah aksi nyata menjaga kesetimbangan siklus air.',
+    hint:'Pilih tindakan yang menambah daerah resapan dan menghemat air.'
+  }
+];
+
+/* ============================================================
+   3. DATA PUZZLE
+============================================================ */
+const PUZZLE_ITEMS = [
+  { id:'p1', slot:1, label:'1. Evaporasi & Transpirasi (Penguapan)', hint:'Air menguap akibat panas matahari' },
+  { id:'p2', slot:2, label:'2. Kondensasi (Pembentukan Awan)',      hint:'Uap air mendingin menjadi butiran air awan' },
+  { id:'p3', slot:3, label:'3. Presipitasi (Curah Hujan)',          hint:'Air jatuh kembali ke daratan dari awan jenuh' },
+  { id:'p4', slot:4, label:'4. Infiltrasi & Aliran Tanah',          hint:'Air hujan meresap ke dalam pori-pori tanah' },
+  { id:'p5', slot:5, label:'5. Limpasan Menuju Lautan',             hint:'Air sungai mengalir kembali ke samudra terbuka' }
+];
+
+/* ============================================================
+   4. STORE / LOCALSTORAGE
+============================================================ */
+const STORE_KEY = 'mpi_siklus_air_v1';
+let store = {
+  student:{ nama:'', kelas:'' },
+  results:[],
+  labLogs:[],
+  puzzleLogs:[],
+  mission:{ tujuan:false, materi:false, lab:false, puzzle:false, evaluasi:false }
+};
+
+function loadStore(){
+  try{
+    const raw = localStorage.getItem(STORE_KEY);
+    if(raw){
+      const parsed = JSON.parse(raw);
+      store = Object.assign(store, parsed);
+      store.mission = Object.assign({tujuan:false,materi:false,lab:false,puzzle:false,evaluasi:false}, parsed.mission||{});
+    }
+  }catch(e){ console.warn('Gagal memuat data', e); }
+}
+function saveStore(){
+  try{ localStorage.setItem(STORE_KEY, JSON.stringify(store)); }
+  catch(e){ console.warn('Gagal menyimpan data', e); }
+}
+loadStore();
+
+/* ============================================================
+   5. UTILITAS
+============================================================ */
+function $(s){ return document.querySelector(s); }
+function $$(s){ return document.querySelectorAll(s); }
+
+function toast(msg, ms=2200){
+  const t = $('#toast');
+  t.innerHTML = msg;
+  t.classList.add('show');
+  clearTimeout(t._tm);
+  t._tm = setTimeout(()=> t.classList.remove('show'), ms);
+}
+
+function nowStr(){
+  const d = new Date();
+  const p = n => String(n).padStart(2,'0');
+  return `${p(d.getDate())}/${p(d.getMonth()+1)}/${d.getFullYear()} ${p(d.getHours())}:${p(d.getMinutes())}`;
+}
+
+function shuffle(a){
+  const arr = a.slice();
+  for(let i=arr.length-1;i>0;i--){
+    const j = Math.floor(Math.random()*(i+1));
+    [arr[i],arr[j]] = [arr[j],arr[i]];
+  }
+  return arr;
+}
+
+/* ============================================================
+   6. NAVIGASI
+============================================================ */
+function go(view){
+  SFX.nav();
+  $$('.view').forEach(v => v.classList.remove('active'));
+  const el = document.getElementById('view-' + view);
+  if(el) el.classList.add('active');
+
+  $$('#tabs button').forEach(b => b.classList.toggle('active', b.dataset.view === view));
+
+  // tandai misi
+  if(['tujuan','materi','lab','puzzle','evaluasi'].includes(view)){
+    store.mission[view] = true;
+    saveStore();
+    updateMissionMap();
+  }
+
+  window.scrollTo({ top:0, behavior:'smooth' });
+
+  if(view === 'lab') setTimeout(resizeCanvas, 60);
+  if(view === 'guru') refreshGuruPanel();
+}
+
+$$('#tabs button').forEach(btn => {
+  btn.addEventListener('click', () => go(btn.dataset.view));
+});
+
+$$('#missionMap .map-node').forEach(n => {
+  n.addEventListener('click', () => { SFX.click(); go(n.dataset.target); });
+});
+
+function updateMissionMap(){
+  let done = 0;
+  $$('#missionMap .map-node').forEach(n => {
+    const key = n.dataset.target;
+    if(store.mission[key]){ n.classList.add('done'); done++; }
+    else n.classList.remove('done');
+  });
+  $('#badgeProgress').textContent = `🏅 Progres Misi: ${done} / 5`;
+
+  const best = store.results.length ? Math.max(...store.results.map(r => r.skor)) : 0;
+  $('#badgeScore').textContent = `⭐ Skor Terbaik: ${best}`;
+}
+updateMissionMap();
+
+/* Sound toggle */
+$('#soundToggle').addEventListener('click', function(){
+  const on = SFX.toggle();
+  this.textContent = on ? '🔊' : '🔇';
+  this.classList.toggle('off', !on);
+  if(on) SFX.click();
+  toast(on ? '🔊 Suara diaktifkan' : '🔇 Suara dimatikan', 1300);
+});
+
+/* ============================================================
+   7. LAB MAYA — SIMULASI INTERAKTIF
+============================================================ */
+const cv = $('#labCanvas');
+const ctx = cv.getContext('2d');
+let W = 600, H = 360, dpr = 1;
+
+let lab = {
+  stimulus: 60,
+  regulation: 50,
+  duration: 20,
+  running: false,
+  elapsed: 0,
+  lastTs: 0,
+  particles: [],
+  rain: [],
+  clouds: [],
+  timeAcc: 0
+};
+
+function resizeCanvas(){
+  if(!cv) return;
+  const rect = cv.getBoundingClientRect();
+  if(rect.width === 0) return;
+  dpr = Math.min(window.devicePixelRatio || 1, 2);
+  cv.width = Math.round(rect.width * dpr);
+  cv.height = Math.round(rect.height * dpr);
+  W = rect.width; H = rect.height;
+  ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+}
+window.addEventListener('resize', () => { resizeCanvas(); });
+
+/* ---------- Metrik ilmiah ---------- */
+function computeMetrics(){
+  const S = lab.stimulus;
+  const R = lab.regulation;
+  const E = S;                                                   // laju evaporasi (0-100)
+  const C = Math.min(100, E * (0.55 + 0.45 * (R/100)));          // pembentukan awan
+  const P = Math.min(100, C * 0.92);                             // presipitasi
+  const I = P * (R/100);                                         // infiltrasi
+  const L = P - I;                                               // limpasan
+  const penalty = Math.max(0, (E - 70) / 30) * 0.5;
+  const stability = Math.max(0, Math.min(100, R * (1 - penalty)));
+  const groundwater = I * (lab.duration / 60) * 1.2;
+  return { E, C, P, I, L, stability, groundwater };
+}
+
+function updateReadouts(){
+  const m = computeMetrics();
+  const r = v => Math.round(v);
+
+  $('#roEvap').textContent   = r(m.E);
+  $('#roAwan').textContent   = r(m.C);
+  $('#roHujan').textContent  = r(m.P);
+  $('#roInfil').textContent  = r(m.I);
+  $('#roLimpas').textContent = r(m.L);
+  $('#roStabil').textContent = r(m.stability);
+
+  $('#gfEvap').style.width   = m.E + '%';        $('#gvEvap').textContent   = r(m.E) + '%';
+  $('#gfAwan').style.width   = m.C + '%';        $('#gvAwan').textContent   = r(m.C) + '%';
+  $('#gfHujan').style.width  = m.P + '%';        $('#gvHujan').textContent  = r(m.P) + '%';
+  $('#gfInfil').style.width  = m.I + '%';        $('#gvInfil').textContent  = r(m.I) + '%';
+  $('#gfLimpas').style.width = m.L + '%';        $('#gvLimpas').textContent = r(m.L) + '%';
+  $('#gfStabil').style.width = m.stability + '%';$('#gvStabil').textContent = r(m.stability) + '%';
+}
+
+/* ---------- Partikel ---------- */
+function spawnEvap(){
+  const m = computeMetrics();
+  const rate = m.E / 100;
+  if(Math.random() < rate * 0.9){
+    const fromSea = Math.random() < 0.6;
+    const x = fromSea
+      ? Math.random() * (W * 0.45)
+      : W * 0.5 + Math.random() * (W * 0.45);
+    const y = fromSea ? H * 0.66 + Math.random()*10 : H * 0.66 - Math.random()*20;
+    lab.particles.push({ x, y, vy: -(0.35 + Math.random()*0.7) * (0.5 + rate), vx:(Math.random()-0.5)*0.35, life:1, size:1.5+Math.random()*2 });
+  }
+}
+function spawnRain(){
+  const m = computeMetrics();
+  const rate = m.P / 100;
+  if(Math.random() < rate * 1.3){
+    const x = W * 0.25 + Math.random() * (W * 0.7);
+    lab.rain.push({ x, y: H * 0.30 + Math.random()*20, vy: 2.2 + Math.random()*2.5, life:1 });
+  }
+}
+
+/* ---------- Gambar ---------- */
+let animT = 0;
+function drawScene(dt){
+  const m = computeMetrics();
+  animT += dt;
+
+  // ---- SKY ----
+  const sky = ctx.createLinearGradient(0,0,0,H*0.7);
+  sky.addColorStop(0, '#0b1224');
+  sky.addColorStop(0.45, '#1e3a8a');
+  sky.addColorStop(1, '#38bdf8');
+  ctx.fillStyle = sky;
+  ctx.fillRect(0,0,W,H*0.7);
+
+  // bintang
+  ctx.fillStyle = 'rgba(255,255,255,.75)';
+  for(let i=0;i<26;i++){
+    const sx = ((i*97)%100)/100 * W;
+    const sy = ((i*53)%100)/100 * H*0.45;
+    const tw = 0.5 + 0.5*Math.sin(animT*2 + i);
+    ctx.globalAlpha = 0.25 + tw*0.55;
+    ctx.fillRect(sx, sy, 1.6, 1.6);
+  }
+  ctx.globalAlpha = 1;
+
+  // ---- MATAHARI ----
+  const sunX = W*0.12, sunY = H*0.14;
+  const sunR = 14 + (lab.stimulus/100)*16;
+  const glow = ctx.createRadialGradient(sunX, sunY, 2, sunX, sunY, sunR*3.4);
+  glow.addColorStop(0, 'rgba(253,224,71,.95)');
+  glow.addColorStop(0.35, 'rgba(251,191,36,.42)');
+  glow.addColorStop(1, 'rgba(251,191,36,0)');
+  ctx.fillStyle = glow;
+  ctx.beginPath(); ctx.arc(sunX, sunY, sunR*3.4, 0, Math.PI*2); ctx.fill();
+  ctx.fillStyle = '#fde047';
+  ctx.beginPath(); ctx.arc(sunX, sunY, sunR, 0, Math.PI*2); ctx.fill();
+
+  // sinar
+  ctx.strokeStyle = 'rgba(253,224,71,.30)';
+  ctx.lineWidth = 2;
+  for(let i=0;i<10;i++){
+    const a = (i/10)*Math.PI*2 + animT*0.25;
+    ctx.beginPath();
+    ctx.moveTo(sunX + Math.cos(a)*sunR*1.3, sunY + Math.sin(a)*sunR*1.3);
+    ctx.lineTo(sunX + Math.cos(a)*sunR*2.1, sunY + Math.sin(a)*sunR*2.1);
+    ctx.stroke();
+  }
+
+  // ---- LAUT ----
+  const seaTop = H*0.68;
+  const sea = ctx.createLinearGradient(0, seaTop, 0, H);
+  sea.addColorStop(0, '#0ea5e9');
+  sea.addColorStop(1, '#0c4a6e');
+  ctx.fillStyle = sea;
+  ctx.fillRect(0, seaTop, W*0.47, H - seaTop);
+
+  // gelombang
+  ctx.strokeStyle = 'rgba(255,255,255,.35)';
+  ctx.lineWidth = 1.5;
+  for(let k=0;k<3;k++){
+    ctx.beginPath();
+    for(let x=0;x<=W*0.47;x+=8){
+      const y = seaTop + 8 + k*13 + Math.sin((x*0.05) + animT*2 + k)*2.5;
+      x===0 ? ctx.moveTo(x,y) : ctx.lineTo(x,y);
+    }
+    ctx.stroke();
+  }
+
+  // ---- DARATAN ----
+  const groundY = H*0.68;
+  const landG = ctx.createLinearGradient(0, groundY, 0, H);
+  landG.addColorStop(0, '#4ade80');
+  landG.addColorStop(0.35, '#15803d');
+  landG.addColorStop(0.6, '#78350f');
+  landG.addColorStop(1, '#3f2412');
+  ctx.fillStyle = landG;
+  ctx.beginPath();
+  ctx.moveTo(W*0.47, groundY);
+  ctx.lineTo(W*0.55, groundY - 12);
+  ctx.lineTo(W*0.66, groundY - 4);
+  ctx.lineTo(W*0.78, groundY - 26);
+  ctx.lineTo(W*1.0, groundY - 8);
+  ctx.lineTo(W, H);
+  ctx.lineTo(W*0.47, H);
+  ctx.closePath();
+  ctx.fill();
+
+  // akuifer (cadangan air tanah)
+  const aqH = 10 + (m.I/100)*26;
+  ctx.fillStyle = 'rgba(56,189,248,.55)';
+  ctx.fillRect(W*0.48, H - aqH - 8, W*0.52, aqH);
+
+  // ---- POHON (jumlah sesuai regulasi) ----
+  const treeCount = Math.round(1 + (lab.regulation/100) * 7);
+  for(let i=0;i<treeCount;i++){
+    const tx = W*0.52 + (i/(Math.max(1,treeCount-1)||1)) * (W*0.42);
+    const ty = groundY - 8 - Math.sin(i*1.7)*6;
+    drawTree(tx, ty, 0.85 + (i%3)*0.12);
+  }
+
+  // ---- AWAN ----
+  const cloudAlpha = Math.min(1, m.C/60);
+  const cloudCount = Math.round(1 + (m.C/100)*5);
+  for(let i=0;i<cloudCount;i++){
+    const cx = W*0.20 + (i/(Math.max(1,cloudCount-1)||1)) * (W*0.68);
+    const cy = H*0.20 + Math.sin(i*2.3)*10;
+    drawCloud(cx, cy, 0.7 + (i%3)*0.18, cloudAlpha);
+  }
+
+  // ---- EVAPORASI ----
+  spawnEvap();
+  ctx.fillStyle = 'rgba(186,230,253,.9)';
+  lab.particles = lab.particles.filter(p => {
+    p.x += p.vx; p.y += p.vy; p.life -= 0.006;
+    if(p.y < H*0.22 || p.life <= 0) return false;
+    ctx.globalAlpha = Math.max(0, p.life) * 0.85;
+    ctx.beginPath(); ctx.arc(p.x, p.y, p.size, 0, Math.PI*2); ctx.fill();
+    return true;
+  });
+  ctx.globalAlpha = 1;
+
+  // ---- HUJAN ----
+  spawnRain();
+  ctx.strokeStyle = 'rgba(147,197,253,.9)';
+  ctx.lineWidth = 2;
+  lab.rain = lab.rain.filter(r => {
+    r.y += r.vy;
+    if(r.y > groundY - 4){
+      // percikan
+      return false;
+    }
+    ctx.beginPath(); ctx.moveTo(r.x, r.y); ctx.lineTo(r.x - 1, r.y + 8); ctx.stroke();
+    return true;
+  });
+
+  // ---- LIMPASAN (panah ke laut) ----
+  if(m.L > 6){
+    ctx.strokeStyle = `rgba(59,130,246,${0.35 + m.L/220})`;
+    ctx.lineWidth = 2 + m.L/28;
+    ctx.beginPath();
+    ctx.moveTo(W*0.92, groundY + 6);
+    ctx.quadraticCurveTo(W*0.70, groundY + 16, W*0.48, seaTop + 16);
+    ctx.stroke();
+    // panah
+    const ax = W*0.48 + 4, ay = seaTop + 16;
+    ctx.beginPath();
+    ctx.moveTo(ax, ay); ctx.lineTo(ax + 11, ay - 6); ctx.lineTo(ax + 11, ay + 6);
+    ctx.closePath();
+    ctx.fillStyle = `rgba(59,130,246,${0.5 + m.L/200})`;
+    ctx.fill();
+  }
+
+  // ---- INFILTRASI (panah ke bawah) ----
+  if(m.I > 6){
+    ctx.strokeStyle = `rgba(16,185,129,${0.35 + m.I/220})`;
+    ctx.lineWidth = 2 + m.I/28;
+    for(let i=0;i<3;i++){
+      const ix = W*0.60 + i*(W*0.13);
+      ctx.beginPath();
+      ctx.moveTo(ix, groundY + 4);
+      ctx.lineTo(ix, H - 18);
+      ctx.stroke();
+      ctx.beginPath();
+      ctx.moveTo(ix, H - 12); ctx.lineTo(ix - 6, H - 22); ctx.lineTo(ix + 6, H - 22);
+      ctx.closePath(); ctx.fillStyle = `rgba(16,185,129,${0.5 + m.I/200})`; ctx.fill();
+    }
+  }
+
+  // ---- LABEL ----
+  ctx.font = 'bold 11px Segoe UI, sans-serif';
+  ctx.fillStyle = 'rgba(255,255,255,.85)';
+  ctx.fillText('🌊 LAUT', 10, seaTop + 22);
+  ctx.fillText('🏞️ DARATAN', W*0.55, groundY + 20);
+  ctx.fillStyle = 'rgba(255,255,255,.7)';
+  ctx.fillText('💧 AIR TANAH', W*0.50, H - 14);
+
+  // ---- STATUS OVERLAY ----
+  if(!lab.running && lab.elapsed === 0){
+    ctx.fillStyle = 'rgba(11,18,36,.35)';
+    ctx.fillRect(0,0,W,H);
+    ctx.fillStyle = '#fff';
+    ctx.font = 'bold 15px Segoe UI, sans-serif';
+    ctx.textAlign = 'center';
+    ctx.fillText('▶ Tekan "Jalankan Simulasi" untuk memulai', W/2, H/2);
+    ctx.textAlign = 'left';
+  }
+}
+
+function drawTree(x, y, s){
+  ctx.fillStyle = '#5b3a1e';
+  ctx.fillRect(x - 2*s, y - 12*s, 4*s, 14*s);
+  ctx.fillStyle = '#22c55e';
+  ctx.beginPath(); ctx.arc(x, y - 18*s, 9*s, 0, Math.PI*2); ctx.fill();
+  ctx.fillStyle = '#16a34a';
+  ctx.beginPath(); ctx.arc(x - 5*s, y - 13*s, 7*s, 0, Math.PI*2); ctx.fill();
+  ctx.beginPath(); ctx.arc(x + 5*s, y - 13*s, 7*s, 0, Math.PI*2); ctx.fill();
+}
+
+function drawCloud(x, y, s, alpha){
+  ctx.globalAlpha = Math.max(0.08, alpha);
+  ctx.fillStyle = '#e2e8f0';
+  ctx.beginPath();
+  ctx.arc(x, y, 15*s, 0, Math.PI*2);
+  ctx.arc(x + 16*s, y + 4*s, 12*s, 0, Math.PI*2);
+  ctx.arc(x - 16*s, y + 5*s, 11*s, 0, Math.PI*2);
+  ctx.arc(x + 4*s, y - 9*s, 12*s, 0, Math.PI*2);
+  ctx.fill();
+  ctx.globalAlpha = 1;
+}
+
+let lastFrame = performance.now();
+function loop(ts){
